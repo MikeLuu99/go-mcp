@@ -2,9 +2,9 @@
 
 A collection of Model Context Protocol (MCP) servers implemented in Go for memory management and research paper storage.
 
-## Components
+## MCP Servers
 
-### Memory MCP Server
+### 1. Memory MCP Server
 A vector-based memory storage system that provides semantic search capabilities.
 
 **Features:**
@@ -18,7 +18,7 @@ A vector-based memory storage system that provides semantic search capabilities.
 - `search-memory`: Find memories using semantic similarity
 - `get-memory`: Retrieve specific memory by ID
 
-### Research Papers MCP Server
+### 2. Research Papers MCP Server
 A Redis-based system for storing and retrieving research papers with fuzzy matching.
 
 **Features:**
