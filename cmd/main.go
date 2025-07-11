@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/agnivade/levenshtein"
@@ -21,6 +22,8 @@ func main() {
 	if err != nil {
 		fmt.Println("Error loading .env file")
 	}
+
+	REDIS_URL := os.Getenv("REDIS_URL")
 
 	s := server.NewMCPServer("research-papers-memory", "1.0.0", server.WithToolCapabilities(true))
 
@@ -45,8 +48,7 @@ func main() {
 	)
 
 	s.AddTool(setNewResearchPaper, func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-
-		opt, _ := redis.ParseURL("REDIS_URL")
+		opt, _ := redis.ParseURL(REDIS_URL)
 		client := redis.NewClient(opt)
 		args := request.GetArguments()
 
@@ -71,7 +73,7 @@ func main() {
 	})
 
 	s.AddTool(getResearchPaper, func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
-		opt, _ := redis.ParseURL("REDIS_URL")
+		opt, _ := redis.ParseURL(os.Getenv("REDIS_URL"))
 		client := redis.NewClient(opt)
 		args := request.GetArguments()
 
