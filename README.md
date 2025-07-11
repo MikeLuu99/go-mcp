@@ -68,6 +68,39 @@ Both servers expose SSE (Server-Sent Events) endpoints:
 - SSE Endpoint: `/mcp/sse`
 - Message Endpoint: `/mcp/message`
 
+## Testing
+
+The project includes comprehensive test suites for both MCP servers located in the `test/` directory.
+
+### Running Tests
+
+Run all tests:
+```bash
+go test ./test/... -v
+```
+
+Run tests for specific server:
+```bash
+# Memory MCP tests
+go test ./test/memory_mcp_test.go -v
+
+# Research Papers MCP tests  
+go test ./test/research_papers_mcp_test.go -v
+```
+
+### Test Coverage
+
+**Memory MCP Server Tests:**
+- `add-to-memory` tool: Storage with/without metadata, error handling
+- `search-memory` tool: Semantic search functionality, no results scenarios
+- `get-memory` tool: Memory retrieval by ID, not found scenarios
+
+**Research Papers MCP Server Tests:**
+- `set-new-research-paper` tool: Paper storage, error handling
+- `get-research-paper` tool: Exact matching, fuzzy matching with Levenshtein distance, boundary conditions
+
+Both test suites use mock implementations to avoid external dependencies during testing.
+
 ## Dependencies
 
 - [mcp-go](https://github.com/mark3labs/mcp-go) - Go MCP implementation
