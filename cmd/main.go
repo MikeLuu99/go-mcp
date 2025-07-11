@@ -3,6 +3,8 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
+	"net/http"
 	"strings"
 
 	"github.com/agnivade/levenshtein"
@@ -120,8 +122,33 @@ func main() {
 	})
 
 	// Start the server
-	if err := server.ServeStdio(s); err != nil {
-		fmt.Printf("Server error: %v\n", err)
+	// if err := server.ServeStdio(s); err != nil {
+	// 	fmt.Printf("Server error: %v\n", err)
+	// }
+	port := 8080
+	fmt.Printf("Starting SSE Server on port: %d\n", port)
+	sseServer := server.NewSSEServer(
+		s,
+		server.WithStaticBasePath("/"),
+		server.WithSSEEndpoint("/mcp/sse"),
+		server.WithMessageEndpoint("/mcp/message"),
+	)
+
+	mux := http.NewServeMux()
+
+	mux.Handle("/", sseServer)
+	// Create an HTTP server
+	httpServer := &http.Server{
+		Addr:    fmt.Sprintf(":%d", port),
+		Handler: mux,
 	}
 
+	// Print available endpoints
+	fmt.Printf("SSE Endpoint: %s\n", sseServer.CompleteSsePath())
+	fmt.Printf("Message Endpoint: %s\n", sseServer.CompleteMessagePath())
+
+	// Start the server
+	if err := httpServer.ListenAndServe(); err != nil {
+		log.Fatalf("Server error: %v\n", err)
+	}
 }
