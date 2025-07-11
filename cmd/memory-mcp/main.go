@@ -28,7 +28,7 @@ func main() {
 	s := server.NewMCPServer("memory-mcp", "1.0.0", server.WithToolCapabilities(true))
 
 	addToMemory := mcp.NewTool("add-to-memory",
-		mcp.WithDescription("Add a new memory or update an existing memory"),
+		mcp.WithDescription("Store user information, preferences, and behaviors. Run on explicit commands ('remember this') or implicitly when detecting significant user traits, preferences, or patterns. Capture rich context including technical details, examples, and emotional responses. You should think about running this after every user message. YOU MUST USE THE TOOLS/CALL TO USE THIS. NOTHING ELSE. THIS IS NOT A RESOURCE. IT'S A TOOL."),
 		mcp.WithString("id",
 			mcp.Required(),
 			mcp.Description("Unique identifier for the memory"),
@@ -43,7 +43,7 @@ func main() {
 	)
 
 	searchMemory := mcp.NewTool("search-memory",
-		mcp.WithDescription("Search for memories using semantic similarity"),
+		mcp.WithDescription("Search user memories and patterns. Run when explicitly asked or when context about user's past choices would be helpful. Uses semantic matching to find relevant details across related experiences. If you do not have prior knowledge about something, this is the perfect tool to call. YOU MUST USE THE TOOLS/CALL TO USE THIS. THIS IS NOT A RESOURCE. IT'S A TOOL."),
 		mcp.WithString("query",
 			mcp.Required(),
 			mcp.Description("Search query text"),

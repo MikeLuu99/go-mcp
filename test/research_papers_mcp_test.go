@@ -45,7 +45,7 @@ func (m *MockRedisClient) Scan(ctx context.Context, cursor uint64, match string,
 
 func createResearchPapersMCPServer(t *testing.T) *mcptest.Server {
 	srv := mcptest.NewUnstartedServer(t)
-	
+
 	mockClient := NewMockRedisClient()
 
 	setNewResearchPaper := mcp.NewTool("set-new-research-paper",
@@ -445,4 +445,3 @@ func TestGetResearchPaperErrors(t *testing.T) {
 		})
 	}
 }
-
